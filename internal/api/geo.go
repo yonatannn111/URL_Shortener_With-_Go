@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-type ipApiResp struct {
+type IpApiResp struct {
 	City    string `json:"city"`
 	Country string `json:"country"`
 	Status  string `json:"status"`
@@ -20,7 +20,7 @@ func lookupGeo(ip string) (country, city string) {
 	resp, err := client.Get(url)
 	if err != nil { return "", "" }
 	defer resp.Body.Close()
-	var r ipApiResp
+	var r IpApiResp
 	if err := json.NewDecoder(resp.Body).Decode(&r); err != nil { return "", "" }
 	if r.Status != "success" { return "", "" }
 	return r.Country, r.City
