@@ -5,7 +5,7 @@ import (
 	"database/sql"
 	"errors"
 	"time"
-
+	"fmt"
 	"github.com/jmoiron/sqlx"
 	"github.com/go-redis/redis/v8"
 )
@@ -74,4 +74,7 @@ func (s *Store) InsertClick(ctx context.Context, urlID int, code, ip, country, c
 	// increment counter (atomic)
 	_, err = s.DB.ExecContext(ctx, `UPDATE urls SET clicks_count = clicks_count + 1 WHERE id = $1`, urlID)
 	return err
+}
+func SaveURL(short, long string) {
+    fmt.Println("Saving:", short, "->", long)
 }
