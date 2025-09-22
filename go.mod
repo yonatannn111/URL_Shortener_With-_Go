@@ -1,9 +1,9 @@
-module your-module-name
+module github.com/yonatannn111/URL_Shortener_With_Go
 
-go 1.20
+go 1.22
 
 require (
-	github.com/go-chi/chi/v5 v5.0.8
+	github.com/go-chi/chi/v5 v5.2.3
 	github.com/go-redis/redis/v8 v8.11.5
 	github.com/jmoiron/sqlx v1.3.5
 	github.com/lib/pq v1.10.9
