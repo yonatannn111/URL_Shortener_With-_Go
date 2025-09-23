@@ -26,7 +26,7 @@ func (a *App) ShortenHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	code := "abc123" // TODO: generate unique code
-	if err := a.Store.SaveURL(r.Context(), code, req.URL); err != nil {
+	if err := a.Store.SaveURL(code, req.URL); err != nil {
 		http.Error(w, "failed to save", http.StatusInternalServerError)
 		return
 	}
@@ -38,7 +38,7 @@ func (a *App) ShortenHandler(w http.ResponseWriter, r *http.Request) {
 // RedirectHandler - redirect short link
 func (a *App) RedirectHandler(w http.ResponseWriter, r *http.Request) {
 	code := chi.URLParam(r, "code")
-	url, err := a.Store.GetURL(r.Context(), code)
+	url, err := a.Store.GetURL(code)
 	if err != nil {
 		http.NotFound(w, r)
 		return

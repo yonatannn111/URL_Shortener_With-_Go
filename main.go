@@ -34,9 +34,9 @@ func main() {
     if err != nil {
         log.Fatalf("db: %v", err)
     }
-    rdb := redis.NewClient(&redis.Options{Addr: redisAddr})
+    redis.NewClient(&redis.Options{Addr: redisAddr})
 
-    store := storage.NewStore(db, rdb)
+    store := storage.NewStore(db)
     w := worker.NewWorker(store)
     w.Start()
 

@@ -1,29 +1,24 @@
 package storage
 
 import (
-	"context"
-
-	"github.com/go-redis/redis/v8"
-	"github.com/jmoiron/sqlx"
+    "github.com/jmoiron/sqlx"
 )
 
 type Store struct {
-	DB  *sqlx.DB
-	RDB *redis.Client
+    DB *sqlx.DB
 }
 
-func NewStore(db *sqlx.DB, rdb *redis.Client) *Store {
-	return &Store{DB: db, RDB: rdb}
+func NewStore(db *sqlx.DB) *Store {
+    return &Store{DB: db}
 }
 
-// Example methods — you can expand later
-func (s *Store) SaveURL(ctx context.Context, code, url string) error {
-	_, err := s.DB.ExecContext(ctx, "INSERT INTO urls (code, long_url) VALUES ($1, $2)", code, url)
-	return err
+func (s *Store) SaveURL(code string, longURL string) error {
+    _, err := s.DB.Exec("INSERT INTO urls (code, original_url) VALUES ($1, $2)", code, longURL)
+    return err
 }
 
-func (s *Store) GetURL(ctx context.Context, code string) (string, error) {
-	var longURL string
-	err := s.DB.GetContext(ctx, &longURL, "SELECT long_url FROM urls WHERE code=$1", code)
-	return longURL, err
+func (s *Store) GetURL(code string) (string, error) {
+    var longURL string
+    err := s.DB.Get(&longURL, "SELECT original_url FROM urls WHERE code=$1", code)
+    return longURL, err
 }
