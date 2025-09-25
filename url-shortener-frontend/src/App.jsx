@@ -12,7 +12,7 @@ function App() {
 
     try {
       const response = await fetch(
-        "https://go-short.up.railway.app/shorten",
+        "https://gsh.up.railway.app/shorten",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
