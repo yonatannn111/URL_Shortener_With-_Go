@@ -8,10 +8,10 @@ function App() {
     e.preventDefault();
 
     try {
-      const res = await fetch("http://localhost:8080/shorten", {
+      const response = await fetch("https://loyal-delight.up.railway.app", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ url }),
+        body: JSON.stringify({ url: longUrl })
       });
 
       const data = await res.json();
