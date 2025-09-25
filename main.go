@@ -53,7 +53,7 @@ func main() {
 
     // === CORS Middleware ===
     r.Use(cors.Handler(cors.Options{
-        AllowedOrigins:   []string{"http://localhost:5173"}, 
+        AllowedOrigins:   []string{"*"}, 
         AllowedMethods:   []string{"GET", "POST", "OPTIONS"},
         AllowedHeaders:   []string{"Accept", "Authorization", "Content-Type", "X-CSRF-Token"},
         AllowCredentials: true,

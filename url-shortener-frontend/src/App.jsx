@@ -3,21 +3,34 @@ import React, { useState } from "react";
 function App() {
   const [url, setUrl] = useState("");
   const [shortUrl, setShortUrl] = useState("");
+  const [error, setError] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError("");
+    setShortUrl("");
 
     try {
-      const response = await fetch("https://loyal-delight.up.railway.app", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ url: longUrl })
-      });
+      const response = await fetch(
+        "https://urlshortenerwith-go-production.up.railway.app/shorten",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ url }) // using state variable
+        }
+      );
 
-      const data = await res.json();
-      setShortUrl(data.shortUrl);
+      if (!response.ok) {
+        const errData = await response.json();
+        setError(errData.error || "Something went wrong");
+        return;
+      }
+
+      const data = await response.json();
+      setShortUrl(data.short_url); // match backend key
     } catch (err) {
       console.error("Error:", err);
+      setError("Failed to fetch. Check backend server.");
     }
   };
 
@@ -36,6 +49,8 @@ function App() {
         <button type="submit">Shorten</button>
       </form>
 
+      {error && <p className="error">❌ {error}</p>}
+
       {shortUrl && (
         <div className="result">
           <p>✅ Shortened URL:</p>
@@ -49,4 +64,3 @@ function App() {
 }
 
 export default App;
-
