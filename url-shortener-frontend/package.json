@@ -1,4 +1,5 @@
 {
+  "$schema": "https://json.schemastore.org/package",
   "name": "url-shortener-frontend",
   "private": true,
   "version": "0.0.0",
